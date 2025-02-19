@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>PdfController</members>
+        <members>PdfController_TEST</members>
+        <members>PdfViewer</members>
+        <members>PdfViewer_TEST</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>pdfSelector</members>
+        <members>pdfViewer</members>
+        <members>utils</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>sfPdfEditorLib</members>
+        <name>StaticResource</name>
+    </types>
+    <version>62.0</version>
+</Package>

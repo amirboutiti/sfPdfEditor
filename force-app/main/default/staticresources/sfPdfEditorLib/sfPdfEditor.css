@@ -1,0 +1,221 @@
+body, html {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    visibility: visible !important;
+}
+/* 🌑 Style Global en nuances de gris */
+.pdf-container {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    visibility: visible !important;
+	height: 100%;
+}
+
+.pdf-header {	
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    padding: 4px;
+    border-radius: 3px 3px 0px 0px;
+	width: 100%;
+}
+/* 🎨 Styles pour les boutons et les icônes */
+.pdf-header select,
+.pdf-header input[type="color"],
+.pdf-header button {
+    margin: 0 5px;
+    padding: 4px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+button svg {
+	max-height: 18px;
+}
+.pdf-header button {	
+	padding: 0;
+    border: none;
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+}
+
+/* 🎨 Effet hover */
+.pdf-header button:hover {
+    background-color: #cfd8e0;
+}
+
+.pdf-header button.active {
+    background-color: #c7d2dd;
+}
+
+
+/* 📜 Conteneur des pages PDF (fix scroll & position) */
+.pdf-pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #f1f3f5;
+    padding: 0; /* Suppression du padding qui pouvait cacher la partie haute */
+    border-radius: 0px 0px 3px 3px;
+    width: 100%;
+    height: 100%; /* Hauteur dynamique pour bien s'adapter */
+    overflow-y: auto; /* Défilement vertical activé */
+    overflow-x: hidden; /* Empêcher le scroll horizontal inutile */
+    position: relative;
+    scroll-behavior: auto; /* ⚠️ Désactiver le scroll automatique */
+}
+
+
+/* 🖼️ Style des pages PDF */
+.pdf-page {
+    position: relative;
+    margin-bottom: 10px;
+    border: 1px solid #bbb;
+    background-color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+	
+}
+
+/* 🎛️ Barre d'outils */
+.pdf-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7ebee;
+    padding: 4px;
+    border-radius: 0px;
+	width: 100%;
+}
+
+/* 🎨 Styles pour les boutons et les icônes */
+.pdf-toolbar select,
+.pdf-toolbar input[type="color"],
+.pdf-toolbar button {
+    margin: 0 5px;
+    padding: 4px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 🖌️ Boutons stylisés avec icônes */
+.pdf-toolbar button {
+    
+	padding: 0;
+    border: none;
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+}
+
+/* 🎭 Icônes dans les boutons */
+.pdf-toolbar button i {
+    font-size: 18px;
+}
+
+/* 🎨 Effet hover */
+.pdf-toolbar button:hover {
+    background-color: #cfd8e0;
+}
+
+/* ✅ Actif */
+.pdf-toolbar button.active {
+    background-color: #c7d2dd;
+}
+
+/* 🖊️ Canvas */
+.pdf-canvas,
+.annotation-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* 📝 Éditeur de texte */
+.text-editor {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 🔄 Undo & Redo */
+#undo-btn, #redo-btn {
+    background-color: #e7ebee;
+}
+
+#undo-btn:hover, #redo-btn:hover {
+    background-color: #c7d2dd;
+}
+
+/* 🖐️ Mode "Main" actif : Curseur en forme de main */
+.grab-mode,
+.grab-mode .pdf-page,
+.grab-mode .pdf-canvas,
+.grab-mode .annotation-canvas {
+    cursor: grab !important;
+}
+
+/* 🖐️ Mode "Main" actif : En train de bouger */
+.grabbing,
+.grabbing .pdf-page,
+.grabbing .pdf-canvas,
+.grabbing .annotation-canvas {
+    cursor: grabbing !important;
+}
+
+
+/* 🎡 Style du spinner */
+.pdf-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+}
+
+/* 🌪️ Animation du spinner */
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Masquer le contenu PDF pendant le chargement */
+.pdf-pages.loading {
+    position: relative;
+    pointer-events: none; /* Empêche l'interaction pendant le chargement */
+    opacity: 0.5; /* Réduction de la visibilité */
+}

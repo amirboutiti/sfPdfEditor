@@ -1,0 +1,10 @@
+<template>
+    <lightning-combobox
+            name="pdfSelector"
+            label="Sélectionner un document PDF"
+            value={selectedPdfId}
+            options={pdfOptions}
+            onchange={handlePdfChange}>
+        </lightning-combobox>
+    <c-pdf-viewer pdf-id={selectedPdfId} debug-level={debugLevel} onsave={handleSave}></c-pdf-viewer>
+</template>
