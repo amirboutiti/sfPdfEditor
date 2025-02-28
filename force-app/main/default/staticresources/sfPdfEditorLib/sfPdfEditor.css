@@ -1,3 +1,15 @@
+:root {
+    --sfe-primary-color: #0176d3;
+    --sfe-background-light: #f8f9fa;
+    --sfe-border-color: #ccc;
+    --sfe-hover-background: #cfd8e0;
+    --sfe-active-background: #c7d2dd;
+    --sfe-disabled-background: #e7ebee;	
+    --scrollbar-thumb: #888;
+    --scrollbar-thumb-hover: #555;
+    --scrollbar-track: #ddd;
+}
+
 body, html {
     width: 100%;
     max-width: 100%;
@@ -5,30 +17,57 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    visibility: visible !important;
 }
-/* 🌑 Style Global en nuances de gris */
+
 .pdf-container {
     width: 100%;
-    max-width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
-    visibility: visible !important;
-	height: 100%;
+	flex-direction: column;
+}
+
+.pdf-main-container {
+	display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;	
+}
+
+.pdf-thumbnails {
+    width: 200px;
+    height: 89vh;
+    overflow-y: auto;
+    background: var(--sfe-background-light);
+    padding: 10px;
+    border-right: 1px solid var(--sfe-border-color);
+}
+.thumbnail {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+    border-color: var(--sfe-primary-color);
 }
 
 .pdf-header {	
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f8f9fa;
+    background: var(--sfe-background-light);
     padding: 4px;
     border-radius: 3px 3px 0px 0px;
 	width: 100%;
 }
-/* 🎨 Styles pour les boutons et les icônes */
+
 .pdf-header select,
 .pdf-header input[type="color"],
 .pdf-header button {
@@ -38,10 +77,23 @@ body, html {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+	fill: var(--sfe-primary-color);
 }
-button svg {
-	max-height: 18px;
+
+
+#shape-controls svg {
+	max-height: 32px !important;
+	max-width: 32px !important;
 }
+#text-controls {
+    align-items: center;
+    justify-content: center;
+}
+#text-controls svg {
+	max-height: 18px !important;
+	max-width: 18px !important;
+}
+
 .pdf-header button {	
 	padding: 0;
     border: none;
@@ -56,35 +108,57 @@ button svg {
     height: 32px;
 }
 
-/* 🎨 Effet hover */
+.pdf-header svg {	
+	max-height: 18px;
+}
+
 .pdf-header button:hover {
-    background-color: #cfd8e0;
+    background-color: var(--sfe-hover-background);
 }
 
 .pdf-header button.active {
-    background-color: #c7d2dd;
+    background-color: var(--sfe-active-background);
 }
 
+.pdf-header button:disabled,
+.pdf-toolbar button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--sfe-disabled-background) !important;
+    color: #a0a0a0;
+    pointer-events: none;
+}
 
-/* 📜 Conteneur des pages PDF (fix scroll & position) */
+.nav-btn-container {
+	display: none;
+    flex-direction: row;
+}
+.nav-btn-container span{
+	display: flex;
+    align-items: anchor-center;
+}
+
 .pdf-pages {
+	
     display: flex;
+	flex: 1;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    overflow-y: auto;
     justify-content: flex-start;
     background-color: #f1f3f5;
-    padding: 0; /* Suppression du padding qui pouvait cacher la partie haute */
+    padding: 0;
     border-radius: 0px 0px 3px 3px;
     width: 100%;
-    height: 100%; /* Hauteur dynamique pour bien s'adapter */
-    overflow-y: auto; /* Défilement vertical activé */
-    overflow-x: hidden; /* Empêcher le scroll horizontal inutile */
+    height: 100%;
+	max-height: 89vh;
+	overflow: auto;
     position: relative;
-    scroll-behavior: auto; /* ⚠️ Désactiver le scroll automatique */
+    scroll-behavior: auto;
+	padding: 20px;
 }
 
-
-/* 🖼️ Style des pages PDF */
 .pdf-page {
     position: relative;
     margin-bottom: 10px;
@@ -94,18 +168,16 @@ button svg {
 	
 }
 
-/* 🎛️ Barre d'outils */
 .pdf-toolbar {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #e7ebee;
+    background: var(--sfe-disabled-background);
     padding: 4px;
     border-radius: 0px;
 	width: 100%;
 }
 
-/* 🎨 Styles pour les boutons et les icônes */
 .pdf-toolbar select,
 .pdf-toolbar input[type="color"],
 .pdf-toolbar button {
@@ -117,10 +189,9 @@ button svg {
     cursor: pointer;
 }
 
-/* 🖌️ Boutons stylisés avec icônes */
 .pdf-toolbar button {
     
-	padding: 0;
+	padding: 8;
     border: none;
     background-color: transparent;
     position: relative;
@@ -133,30 +204,32 @@ button svg {
     height: 32px;
 }
 
-/* 🎭 Icônes dans les boutons */
 .pdf-toolbar button i {
     font-size: 18px;
 }
 
-/* 🎨 Effet hover */
 .pdf-toolbar button:hover {
-    background-color: #cfd8e0;
+    background-color: var(--sfe-hover-background);
 }
 
-/* ✅ Actif */
 .pdf-toolbar button.active {
-    background-color: #c7d2dd;
+    background-color: var(--sfe-active-background);
 }
 
-/* 🖊️ Canvas */
 .pdf-canvas,
 .annotation-canvas {
     position: absolute;
     top: 0;
     left: 0;
+	z-index: 1;
+}
+.lower-canvas, .upper-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
-/* 📝 Éditeur de texte */
 .text-editor {
     display: none;
     position: absolute;
@@ -166,16 +239,14 @@ button svg {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* 🔄 Undo & Redo */
 #undo-btn, #redo-btn {
-    background-color: #e7ebee;
+    background-color: var(--sfe-disabled-background);
 }
 
 #undo-btn:hover, #redo-btn:hover {
-    background-color: #c7d2dd;
+    background-color: var(--sfe-active-background);
 }
 
-/* 🖐️ Mode "Main" actif : Curseur en forme de main */
 .grab-mode,
 .grab-mode .pdf-page,
 .grab-mode .pdf-canvas,
@@ -183,7 +254,6 @@ button svg {
     cursor: grab !important;
 }
 
-/* 🖐️ Mode "Main" actif : En train de bouger */
 .grabbing,
 .grabbing .pdf-page,
 .grabbing .pdf-canvas,
@@ -191,8 +261,6 @@ button svg {
     cursor: grabbing !important;
 }
 
-
-/* 🎡 Style du spinner */
 .pdf-spinner {
     position: absolute;
     top: 50%;
@@ -207,15 +275,228 @@ button svg {
     z-index: 10;
 }
 
-/* 🌪️ Animation du spinner */
 @keyframes spin {
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Masquer le contenu PDF pendant le chargement */
 .pdf-pages.loading {
     position: relative;
-    pointer-events: none; /* Empêche l'interaction pendant le chargement */
-    opacity: 0.5; /* Réduction de la visibilité */
+    pointer-events: none;
+    opacity: 0.5;
+}
+.pdf-container.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.zoom-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.separator {
+    width: 1px;
+    height: 24px;
+    background-color: var(--sfe-border-color);
+    margin: 0 10px;
+}
+
+#zoom-slider {
+    width: 120px;
+    -webkit-appearance: revert;
+    height: 5px;
+    background: var(--sfe-border-color);
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+#zoom-slider:hover {
+    background: #888;
+}
+
+#zoom-out-btn, #zoom-in-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--sfe-background-light);
+    border: 1px solid var(--sfe-border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+#zoom-out-btn:hover, #zoom-in-btn:hover {
+    background-color: var(--sfe-hover-background);
+}
+
+.pdf-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sfe-disabled-background);
+    padding: 4px;
+    border-radius: 3px;
+    width: 100%;
+    gap: 8px;
+}
+
+.pdf-toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    border-radius: 5px;
+}
+
+.pdf-toolbar-group i {
+	fill: var(--sfe-primary-color);
+}
+.pdf-toolbar-slider {
+    width: 120px;
+    -webkit-appearance: revert;
+    height: 5px;
+    background: var(--sfe-border-color);
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.pdf-toolbar-slider:hover {
+    background: #888;
+}
+
+.pdf-toolbar-value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.pdf-toolbar-input {
+    border: none;
+    width: 40px;
+    height: 32px;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.pdf-toolbar-button {
+    padding: 6px;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    transition: background 0.2s;
+}
+
+.pdf-toolbar-button:hover {
+    background-color: var(--sfe-hover-background);
+}
+
+.pdf-toolbar-group i {
+	display: flex;
+	height: 20px;
+	width: 20px;
+}
+.highlight-preview {
+    width: 32px;
+    height: 32px;
+    border-radius: 40%;
+	
+    cursor: pointer;
+}
+
+.highlight-preview:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hidden-color-picker {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    width: 0px;
+    height: 0px;
+}
+
+.highlight-annotation {
+    pointer-events: none;
+    user-select: none;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid var(--sfe-border-color);
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    width: 150px;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    z-index: 1000 !important;
+}
+
+.dropdown-menu.show {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+    background: #f0f0f0;
+}
+
+.dropdown-item svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.pdf-pages::-webkit-scrollbar,
+.pdf-thumbnails::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.pdf-pages::-webkit-scrollbar-track,
+.pdf-thumbnails::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+}
+
+.pdf-pages::-webkit-scrollbar-thumb,
+.pdf-thumbnails::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+.pdf-pages::-webkit-scrollbar-thumb:hover,
+.pdf-thumbnails::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
 }

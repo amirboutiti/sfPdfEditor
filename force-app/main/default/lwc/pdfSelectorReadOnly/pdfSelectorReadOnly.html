@@ -6,5 +6,5 @@
             options={pdfOptions}
             onchange={handlePdfChange}>
         </lightning-combobox>
-    <c-pdf-viewer pdf-id={selectedPdfId} debug-level={debugLevel} onsave={handleSave} save-status={saveStatus}></c-pdf-viewer>
+    <c-pdf-viewer pdf-id={selectedPdfId} debug-level={debugLevel} read-only="true"></c-pdf-viewer>
 </template>

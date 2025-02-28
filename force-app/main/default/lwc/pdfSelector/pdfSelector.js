@@ -54,6 +54,9 @@ export default class PdfSelector extends LightningElement {
     @track
     selectedPdfId = null; // Stores the selected PDF ID to be passed to PdfViewer.
 
+    @track
+    saveStatus = null;
+
     CHUNK_SIZE = 3 * 1024 * 1024; // Defines the chunk size for file uploads (3 MB).
     
     /**
@@ -83,6 +86,7 @@ export default class PdfSelector extends LightningElement {
      * @description Handles the save event from PdfViewer and determines if chunked upload is needed.
      */
     handleSave(event) {
+        this.saveStatus = 'failure' ;
         try {
             const base64Pdf = event.detail;
             logMessage(this.debugLevel, 'info', 'Checking PDF size before sending...');
@@ -106,6 +110,7 @@ export default class PdfSelector extends LightningElement {
         } catch (error) {
             showErrorToast(this, 'Error checking the file', JSON.stringify(error));
             logMessage(this.debugLevel, 'error', 'Error checking the file: '+JSON.stringify(error));
+            this.saveStatus = 'failure' ;
         }
     }
 
@@ -132,11 +137,14 @@ export default class PdfSelector extends LightningElement {
         
             // Appeler Apex
             const result = await savePdfToSalesforce({ base64Data: base64Pdf });
-            logMessage(this.debugLevel, 'info', `Document successfully saved to Salesforce : ${result}`);        
-            showSuccessToast(this, 'Success', 'Document successfully saved to Salesforce.');
+            logMessage(this.debugLevel, 'info', `Document successfully saved to Salesforce : ${result}`);  
+            showSuccessToast(this, 'Success', 'Document successfully saved to Salesforce.');    
+            this.saveStatus = 'success';  
+            
         } catch (error) {
             showErrorToast(this, 'Error sending PDF to Salesforce', JSON.stringify(error));
             logMessage(this.debugLevel, 'error', 'Error sending PDF to Salesforce: '+JSON.stringify(error));
+            this.saveStatus = 'failure' ;
         }
     }
 
@@ -179,14 +187,16 @@ export default class PdfSelector extends LightningElement {
                 } catch (error) {
                     showErrorToast(this, `Error sending chunk ${chunkIndex}:`, JSON.stringify(error));
                     logMessage(this.debugLevel, 'error', `Error sending chunk ${chunkIndex}:`, JSON.stringify(error));
+                    this.saveStatus = 'failure' ;
                     break;
                 }
             }
-        
             showSuccessToast(this, 'Success', 'Document successfully saved to Salesforce.');
+            this.saveStatus = 'success';
         } catch (error) {
             showErrorToast(this, 'Error sending PDF to Salesforce', JSON.stringify(error));
             logMessage(this.debugLevel, 'error', 'Error sending PDF to Salesforce: '+JSON.stringify(error));
+            this.saveStatus = 'failure';
         }
     }
 }

@@ -38,6 +38,16 @@ import { logMessage, dispatchError } from 'c/utils';
 
 export default class PdfViewer extends LightningElement {
 
+    _readOnly = false; // Indicates if the PDF viewer is in read-only mode.
+
+    @api
+    get readOnly() {
+        return this._readOnly;
+    }
+
+    set readOnly(value) {
+        this._readOnly = value;
+    }
     _debugLevel = 0; // Internal storage for debugLevel.
 
     /**
@@ -79,7 +89,19 @@ export default class PdfViewer extends LightningElement {
             this.loadPdfFromSalesforce();
         }
     }
-    
+    _latestSaveStatus = null;
+    @api
+    get saveStatus() {
+        return this._latestSaveStatus;
+    }
+
+    set saveStatus(value) {
+        if(value != null && value != undefined) {
+            this._latestSaveStatus = value;
+            this.sfPdfEditor.updateAfterSave(value);
+        }
+    }
+
     @track
     isScriptLoaded = false; // Tracks if the external script has been loaded.
 
@@ -121,15 +143,21 @@ export default class PdfViewer extends LightningElement {
      */
     initializeEditor() {
         const pdfContainer = this.template.querySelector(".pdf-container");
-        if (!pdfContainer) {
-            console.error("Élément `pdf-container` introuvable !");
-            return;
+        try {
+            if (!pdfContainer) {
+                throw new Error("pdf-container not found.");
+            }
+            this.sfPdfEditor = new SFPdfEditor({
+                container: pdfContainer,
+                basePath:sfPdfEditorLib,
+                readOnly:this._readOnly,
+                debugLevel: this._debugLevel,
+            });
+            logMessage('info', 'PDF Editor initialized.');
+        } catch (error) {
+            logMessage('error', 'Error initializing Editor:', error);
+            dispatchError(this, 'Error initializing Editor', error);
         }
-        this.sfPdfEditor = new SFPdfEditor({
-            container: pdfContainer,
-            basePath:sfPdfEditorLib
-        });
-        logMessage('info', 'PDF Editor initialized.');
     }
 
     /**
