@@ -15,13 +15,13 @@ The **Salesforce code** is released under the **MIT license**, while the **sfPdf
 - 📄 **Display** PDFs stored in Salesforce.
 - ✏ **Edit** PDFs (supports adding **text, shapes, highlights, and signatures**).
 - 🔄 **Component interaction**:
-  - [`pdfSelector`](pdfSelector.md) (provided as an example) lists the **10 most recent PDFs** in Salesforce and sends the selected file ID to [`pdfViewer`](pdfViewer.md).
-  - `pdfSelectorReadOnly` provides a **read-only** version of [`pdfSelector`](pdfSelector.md), allowing users to view PDFs without modification.
-  - [`pdfViewer`](pdfViewer.md) displays PDFs and allows **editing (text, shapes, highlights, and signatures)**.
-  - Once modified, [`pdfViewer`](pdfViewer.md) sends the updated file to [`pdfSelector`](pdfSelector.md), which **saves it back to Salesforce**.
+  - [`pdfSelector`](docs/pdfSelector.md) (provided as an example) lists the **10 most recent PDFs** in Salesforce and sends the selected file ID to [`pdfViewer`](docs/pdfViewer.md).
+  - [`pdfSelectorReadOnly`](docs/pdfSelectorReadOnly.md) provides a **read-only** version of [`pdfSelector`](docs/pdfSelector.md), allowing users to view PDFs without modification.
+  - [`pdfViewer`](docs/pdfViewer.md) displays PDFs and allows **editing (text, shapes, highlights, and signatures)**.
+  - Once modified, [`pdfViewer`](docs/pdfViewer.md) sends the updated file to [`pdfSelector`](docs/pdfSelector.md), which **saves it back to Salesforce**.
 - 🚨 **Error Handling**:
-  - [`pdfViewer`](pdfViewer.md) dispatches an **`onerror` event** when an issue occurs.
-  - [`pdfSelector`](pdfSelector.md) and `pdfSelectorReadOnly` listen for this event to **log errors or provide user feedback**.
+  - [`pdfViewer`](docs/pdfViewer.md) dispatches an **`onerror` event** when an issue occurs.
+  - [`pdfSelector`](docs/pdfSelector.md) and `pdfSelectorReadOnly` listen for this event to **log errors or provide user feedback**.
 - 🔗 **Seamless Salesforce integration** via LWC and Apex.
 
 ---
@@ -38,9 +38,9 @@ The **Salesforce code** is released under the **MIT license**, while the **sfPdf
 ### ⚡ **Lightning Web Components (LWC)**
 | Component | Description |
 |-----------|------------|
-| [`pdfViewer`](pdfViewer.md) | Displays and allows editing of a given PDF (text, shapes, highlights, and signatures). |
-| [`pdfSelector`](pdfSelector.md) | Lists the last 10 stored PDFs and sends the selected file ID to [`pdfViewer`](pdfViewer.md) for editing. |
-| [`pdfSelectorReadOnly`](pdfSelectorReadOnly.md) | Read-only version of [`pdfSelector`](pdfSelector.md), allowing users to view PDFs without modification. |
+| [`pdfViewer`](docs/pdfViewer.md) | Displays and allows editing of a given PDF (text, shapes, highlights, and signatures). |
+| [`pdfSelector`](docs/pdfSelector.md) | Lists the last 10 stored PDFs and sends the selected file ID to [`pdfViewer`](docs/pdfViewer.md) for editing. |
+| [`pdfSelectorReadOnly`](docs/pdfSelectorReadOnly.md) | Read-only version of [`pdfSelector`](docs/pdfSelector.md), allowing users to view PDFs without modification. |
 | `utils` | Utility functions for PDF management. |
 
 ---
@@ -59,9 +59,9 @@ The **Salesforce code** is released under the **MIT license**, while the **sfPdf
    ```sh
    sfdx force:source:deploy -p force-app -u <yourOrgAlias>
    ```
-4. **Add [`pdfSelector`](pdfSelector.md) or [`pdfSelectorReadOnly`](pdfSelectorReadOnly.md) to a Lightning page:**  
+4. **Add [`pdfSelector`](docs/pdfSelector.md) or [`pdfSelectorReadOnly`](docs/pdfSelectorReadOnly.md) to a Lightning page:**  
    - Navigate to **Setup** → **Lightning App Builder**.  
-   - Select the page where you want to add [`pdfSelector`](pdfSelector.md) or [`pdfSelectorReadOnly`](pdfSelectorReadOnly.md).  
+   - Select the page where you want to add [`pdfSelector`](docs/pdfSelector.md) or [`pdfSelectorReadOnly`](docs/pdfSelectorReadOnly.md).  
    - Drag and drop the component onto the page.  
    - Save and activate the page.
 
@@ -69,21 +69,21 @@ The **Salesforce code** is released under the **MIT license**, while the **sfPdf
 
 ## 🖥 **Usage**
 ### 1️⃣ Selecting a PDF file from Salesforce
-- The [`pdfSelector`](pdfSelector.md) component lists the **10 most recent PDF files** stored in Salesforce.
-- When a user selects a file, its **ID is sent** to [`pdfViewer`](pdfViewer.md).
-- The [`pdfSelectorReadOnly`](pdfSelectorReadOnly.md) component allows viewing PDFs **without editing capabilities**.
+- The [`pdfSelector`](docs/pdfSelector.md) component lists the **10 most recent PDF files** stored in Salesforce.
+- When a user selects a file, its **ID is sent** to [`pdfViewer`](docs/pdfViewer.md).
+- The [`pdfSelectorReadOnly`](docs/pdfSelectorReadOnly.md) component allows viewing PDFs **without editing capabilities**.
 
 ### 2️⃣ Displaying and editing the PDF file
-- [`pdfViewer`](pdfViewer.md) retrieves and displays the selected file using **sfPdfEditorLib**.
+- [`pdfViewer`](docs/pdfViewer.md) retrieves and displays the selected file using **sfPdfEditorLib**.
 - The user can **edit the PDF** (add **text, shapes, highlights, and signatures**).
 
 ### 3️⃣ Saving the modified file
 - Once modifications are done, the user clicks **"Save"**.
-- [`pdfViewer`](pdfViewer.md) sends the modified file to [`pdfSelector`](pdfSelector.md), which **stores it back in Salesforce**.
+- [`pdfViewer`](docs/pdfViewer.md) sends the modified file to [`pdfSelector`](docs/pdfSelector.md), which **stores it back in Salesforce**.
 
 ### 4️⃣ Handling errors
-- [`pdfViewer`](pdfViewer.md) dispatches an **`onerror` event** when an issue occurs.
-- [`pdfSelector`](pdfSelector.md) and [`pdfSelectorReadOnly`](pdfSelectorReadOnly.md) listen for this event to **log errors or provide user feedback**.
+- [`pdfViewer`](docs/pdfViewer.md) dispatches an **`onerror` event** when an issue occurs.
+- [`pdfSelector`](docs/pdfSelector.md) and [`pdfSelectorReadOnly`](docs/pdfSelectorReadOnly.md) listen for this event to **log errors or provide user feedback**.
 
 ---
 
